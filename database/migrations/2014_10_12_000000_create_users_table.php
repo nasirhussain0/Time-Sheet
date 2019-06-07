@@ -18,11 +18,11 @@ class CreateUsersTable extends Migration
             $table->string('fullname');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('profilePic');
+            $table->string('profilePic')->nullable();
             $table->date('registerDate');
             $table->boolean('admin');
-            $table->decimal('payRate');
-            $table->integer('numOfHolidays');            
+            $table->decimal('payRate')->nullable();
+            $table->integer('numOfHolidays')->nullable();           
             $table->rememberToken();
             $table->timestamps();
         });

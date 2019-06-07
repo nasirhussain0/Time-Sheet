@@ -6,6 +6,11 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Http\Request;
+use DateTime;
 
 class RegisterController extends Controller
 {
@@ -48,9 +53,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
+            'fullname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'profilePic'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
     }
 
@@ -62,10 +68,34 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // dd($data);
+        // dd($data['profilePic']);
+        $customerName = str_replace(' ', '',$data['fullname']);
+        // dd($customerName);
+        $profilePic = $data['profilePic'];
+        // dd($profilePic);
+        $profilePicname = $profilePic->getClientOriginalName();
+        // dd($profilePicname);
+        $fileName = $customerName.$profilePicname;
+        // dd($fileName);
+        $uploadPicPath = 'profilePics/';
+        $profilePic->move($uploadPicPath,$fileName);
+        $profilePicUrl = $uploadPicPath.$fileName;
+        // dd($profilePicUrl);
+
+        //create date for database field registerDate
+        $date = new DateTime();
+        $date = date_format($date,'Y-m-d');
+
         return User::create([
-            'name' => $data['name'],
+            'fullname' => $data['fullname'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'profilePic'=>$profilePicUrl,
+            'registerDate' => $date,
+            'admin'=>0,
+            'payRate'=>0,
+            'numOfHolidays'=>0,
         ]);
     }
 }
