@@ -21,8 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('profilePic')->nullable();
             $table->date('registerDate');
             $table->boolean('admin');
+            $table->boolean('active')->default(1);
             $table->decimal('payRate')->nullable();
-            $table->integer('numOfHolidays')->nullable();           
+            $table->integer('numOfHolidays')->nullable();                    
             $table->rememberToken();
             $table->timestamps();
         });
