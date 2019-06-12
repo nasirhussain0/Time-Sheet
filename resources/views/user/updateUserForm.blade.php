@@ -50,4 +50,10 @@
   <button type="submit" class="btn btn-primary">submit</button>
 </form>
 
+
+<h3>Remove user</h3>
+<form action="removeUser/{{$user->id}}" method="post" enctype="multipart/form-data">
+  {{csrf_field()}}
+  <button type="submit" class="btn btn-danger">Remove</button>
+</form>
 @endsection

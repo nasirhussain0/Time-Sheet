@@ -66,24 +66,16 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
-    {
-        // dd($data);
-        // dd($data['profilePic']);
+    protected function create(array $data){
+
         $customerName = str_replace(' ', '',$data['fullname']);
-        // dd($customerName);
         $profilePic = $data['profilePic'];
-        // dd($profilePic);
         $profilePicname = $profilePic->getClientOriginalName();
-        // dd($profilePicname);
         $fileName = $customerName.$profilePicname;
-        // dd($fileName);
         $uploadPicPath = 'profilePics/';
         $profilePic->move($uploadPicPath,$fileName);
-        $profilePicUrl = $uploadPicPath.$fileName;
-        // dd($profilePicUrl);
+        $profilePicUrl = $fileName;
 
-        //create date for database field registerDate
         $date = new DateTime();
         $date = date_format($date,'Y-m-d');
 

@@ -11,26 +11,19 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     public function index(){
-    	// dd('test');
-    	$id = Auth::id();
-    	// dd($id);
+       	$id = Auth::id();   
     	$user = User::find($id);
-    	// dd($user);
-
     	return view('user.updateUserForm', ['user' => $user]);
-
-
     }
 
     public function updateProfile(Request $request, $id){
     	$name = $request->fullname;
 	 	$customerName = str_replace(' ', '',$request->fullname);
-		// dd($customerName);
         $profilePic = $request->file('profilePicN');
         if($profilePic == null){
         	$updateArray = array('fullname'=>$name);
 			DB::table('users')->where('id',$id)->update($updateArray);
-        }else{        	
+        }else{  
         	$profilePicname = $profilePic->getClientOriginalName();
 	        $fileName = $customerName.$profilePicname;
 	        $uploadPicPath = 'profilePics/';
@@ -46,14 +39,20 @@ class UserController extends Controller
 	public function updatePassword(Request $request, $id){
 		$password = $request->password;
 	 	$user = User::find($id);
-	 	// dd($user);
         $user->password = Hash::make($password);
         $user->save();
 	    return redirect()->back()->with('updatedDatabase', 'New details updated');
 	}
 
-	public function removeUser($id){
-		User::destroy($id);
-	    return view('home');
+	public function removeUser(Request $request, $id){
+	    User::where('id', $id)
+            ->update(['active' => 0]);
+       
+        auth()->logout();
+       
+        session()->flash('message', 'account has been deactivated');
+       
+        return redirect('/login');
+	    
 	}
 }

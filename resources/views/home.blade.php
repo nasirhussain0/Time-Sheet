@@ -13,8 +13,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    You are logged in!
+                    <ul>
+                        <li><a href="{{ route('updateUser') }}" class="btn btn-info">update profile</a></li>
+                    </ul>
                 </div>
             </div>
         </div>

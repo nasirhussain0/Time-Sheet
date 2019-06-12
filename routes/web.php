@@ -21,7 +21,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/updateUser', 'UserController@index')->name('updateUser');
 Route::post('updateProfile/{id}', 'UserController@updateProfile')->name('updateProfile');
 Route::post('updatePassword/{id}', 'UserController@updatePassword')->name('updatePassword');
-
 Route::post('removeUser/{id}', 'UserController@removeUser')->name('removeUser');
 
 
