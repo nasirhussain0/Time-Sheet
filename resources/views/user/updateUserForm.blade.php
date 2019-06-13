@@ -12,7 +12,7 @@
 <form action="updateProfile/{{$user->id}}" method="post" enctype="multipart/form-data">
 	{{csrf_field()}}
   <div class="form-group">
-    <label for="fullname">Email address</label>
+    <label for="fullname">Name</label>
     <input type="fullname" class="form-control" id="fullname"  name="fullname" value="{{$user->fullname}}">
   </div>
  <div class="form-group">

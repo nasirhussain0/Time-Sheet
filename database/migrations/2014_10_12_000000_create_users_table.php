@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('profilePic')->nullable();
             $table->date('registerDate');
-            $table->boolean('admin');
+            $table->boolean('admin')->default(0);
             $table->boolean('active')->default(1);
             $table->decimal('payRate')->nullable();
             $table->integer('numOfHolidays')->nullable();                    

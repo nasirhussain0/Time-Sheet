@@ -23,7 +23,26 @@ Route::post('updateProfile/{id}', 'UserController@updateProfile')->name('updateP
 Route::post('updatePassword/{id}', 'UserController@updatePassword')->name('updatePassword');
 Route::post('removeUser/{id}', 'UserController@removeUser')->name('removeUser');
 
+//admin routes
+Route::group(['middleware' => ['restrictToAdmin']], function(){
+	// users routes
+	Route::get('getAllUsers','Admin\AdminController@index')->name('getAllUsers');
+	Route::get('getUser/{id}', 'Admin\AdminController@getUser')->name('getUser');
+	Route::post('updateUserProfile/{id}', 'Admin\AdminController@updateUserProfile')->name('updateUserProfile');
+	Route::get('deleteUser/{id}', 'Admin\AdminController@deleteUser')->name('deleteUser');
+
+	Route::get('accountFreeze/{id}', 'Admin\AdminController@accountFreeze')->name('accountFreeze');
+	Route::get('unfreeze/{id}', 'Admin\AdminController@unfreeze')->name('unfreeze');
+//job routes
+	Route::get('newJob', 'JobController@newJob')->name('newJob');
+	Route::post('/createNewJob', 'JobController@createNewJob');
+
+	Route::get('getAllJobs','JobController@index')->name('getAllJobs');
+	Route::get('getJob/{id}', 'JobController@getJob')->name('getJob');
+	Route::post('updateJob/{id}', 'JobController@updateJob')->name('updateJob');
+	Route::get('deleteJob/{id}', 'JobController@deleteJob')->name('deleteJob');
 
 
+});
 
 
