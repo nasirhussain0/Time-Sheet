@@ -14,7 +14,7 @@ class AddSessionIdToExpensesTable extends Migration
     public function up()
     {
         Schema::table('expenses', function (Blueprint $table) {
-            $table->integer('sessionId')->unsigned();
+            $table->integer('sessionId')->unsigned()->nullable();
             $table->foreign('sessionId')->references('id')->on('sessions');
         });
     }

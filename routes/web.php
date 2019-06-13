@@ -29,7 +29,7 @@ Route::group(['middleware' => ['restrictToAdmin']], function(){
 	Route::get('getAllUsers','Admin\AdminController@index')->name('getAllUsers');
 	Route::get('getUser/{id}', 'Admin\AdminController@getUser')->name('getUser');
 	Route::post('updateUserProfile/{id}', 'Admin\AdminController@updateUserProfile')->name('updateUserProfile');
-	Route::get('deleteUser/{id}', 'Admin\AdminController@deleteUser')->name('deleteUser');
+	// Route::get('deleteUser/{id}', 'Admin\AdminController@deleteUser')->name('deleteUser');
 
 	Route::get('accountFreeze/{id}', 'Admin\AdminController@accountFreeze')->name('accountFreeze');
 	Route::get('unfreeze/{id}', 'Admin\AdminController@unfreeze')->name('unfreeze');
@@ -40,7 +40,7 @@ Route::group(['middleware' => ['restrictToAdmin']], function(){
 	Route::get('getAllJobs','JobController@index')->name('getAllJobs');
 	Route::get('getJob/{id}', 'JobController@getJob')->name('getJob');
 	Route::post('updateJob/{id}', 'JobController@updateJob')->name('updateJob');
-	Route::get('deleteJob/{id}', 'JobController@deleteJob')->name('deleteJob');
+	// Route::get('deleteJob/{id}', 'JobController@deleteJob')->name('deleteJob');
 });
 
 
@@ -52,6 +52,19 @@ Route::get('/getSession/{session_id}', 'SessionController@getSession')->name('ge
 Route::post('/updateSession/{session_id}', 'SessionController@updateSession');
 
 
+//Expense url
+Route::get('/newExpense', 'ExpenseController@newExpense')->name('newExpense');
+Route::post('/createNewExpense', 'ExpenseController@createNewExpense');
+
+Route::get('/getExpenses', 'ExpenseController@getExpenses')->name('getExpenses');
+
+Route::get('/getExpense/{expenses_id}', 'ExpenseController@getExpense')->name('getExpense');
+Route::post('/updateExpense/{expenses_id}', 'ExpenseController@updateExpense');
+
+Route::get('/getExpensePicture/{expenses_id}', 'ExpenseController@getExpensePicture')->name('getExpensePicture');
+Route::post('/updateExpensePicture/{expenses_id}', 'ExpenseController@updateExpensePicture');
+
+Route::get('deleteExpense/{expenses_id}', 'ExpenseController@deleteExpense')->name('deleteExpense');
 
 
 

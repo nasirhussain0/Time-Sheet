@@ -13,24 +13,21 @@
             <th>Cost</th>
             <th>Session status</th>
             <th>expenses_status</th>
-            <th>Created at</th>
-            <th>Updated at</th>
             <th colspan="3">Actions</th>
         </tr>
         </thead>
         <tbody>
 
-        @foreach($users as $user)
+        @foreach($authUserSessions as $userSessions)
         <tr>
-            <td>{{$user->startTime}}</td>
-            <td>{{$user->endTime}}</td>
-            <td>{{$user->date}}</td>
-            <td>{{$user->name}}</td>
-            <td>{{$user->amount}}</td>
-            <td>{{$user->session_status}}</td>
-            <td>{{$user->expenses_status}}</td>      
-            <td><a href="{{url('getSession/'.$user->session_id)}}" class="btn btn-primary">Edit</a></td>
-            <td><a href="  {{url('deleteJob/'.$user->session_id)}}"  class="btn btn-warning">Remove</a></td>                 
+            <td>{{$userSessions->startTime}}</td>
+            <td>{{$userSessions->endTime}}</td>
+            <td>{{$userSessions->date}}</td>
+            <td>{{$userSessions->name}}</td>
+            <td>{{$userSessions->amount}}</td>
+            <td>{{$userSessions->session_approved}}</td>
+            <td>{{$userSessions->expenses_approved}}</td>      
+            <td><a href="{{url('getSession/'.$userSessions->session_id)}}" class="btn btn-primary">Edit</a></td>                      
         </tr>
         @endforeach
         </tbody>

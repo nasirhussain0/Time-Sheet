@@ -24,8 +24,8 @@
   </div>
 
   <div class="form-group">
-    <label for="status">Session status</label>
-    <input type="text" class="form-control" id="status"  name="status"  value="{{$findSession->session_status}}" required>
+    <label for="status">Session approved</label>
+    <input type="text" class="form-control" id="status"  name="status"  value="{{$findSession->session_approved}}" required>
   </div>
 
   <div class="form-group">
@@ -54,8 +54,8 @@
   </div>
 
   <div class="form-group">
-    <label for="expensesStatus">Payment Status</label>
-    <input type="text" class="form-control" id="expensesStatus"  name="expensesStatus" value="{{$findSession->expenses_status}}" required>
+    <label for="expensesStatus">Expenses approved</label>
+    <input type="text" class="form-control" id="expensesStatus"  name="expensesStatus" value="{{$findSession->expenses_approved}}" required>
   </div>
 
    <button type="submit" class="btn btn-primary">Submit</button>

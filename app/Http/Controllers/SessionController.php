@@ -16,13 +16,7 @@ class SessionController extends Controller
     	return view('session.newSessionForm', ['jobs' => $jobs]);
     }
 
-      public function createNewSession(Request $request){
-    	
-    	 $this->validate($request, [
-            'evidencePic'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
-
+    public function createNewSession(Request $request){
     	$userId = Auth::id();
     	
     	$jobId = $request->input('job');
@@ -31,48 +25,32 @@ class SessionController extends Controller
 		$session->startTime = $request->startTime;
         $session->endTime = $request->endTime;
         $session->date = $request->date;
-        $session->status = $request->status;
+        $session->approved = 'No';
         $session->notes = $request->notes;
         $session->userId = $userId;
         $session->jobId = $jobId;
         $session->save();
 
-        $sessionId = DB::getPdo()->lastInsertId();
+     //    $sessionId = DB::getPdo()->lastInsertId();
 
-        $data = $request->input('evidencePic');
-        $evidencePic = $request->file('evidencePic');
-        $evidencePicName = $evidencePic->getClientOriginalName();
-	    $fileName = $sessionId.$evidencePicName;
-	    $uploadPicPath = 'evidencePics/';
-	    $evidencePic->move($uploadPicPath,$fileName);
-	    $evidencePicUrl = $fileName;
-
-        $expense = New Expense();
-        $expense->amount = $request->amount;
-        $expense->evidencePic = $evidencePicUrl;
-        $expense->paymentType = $request->paymentType;
-        $expense->status = $request->expensesStatus;
-        $expense->userId = $userId;
-        $expense->sessionId = $sessionId;
-        $expense->save();
-        
         return redirect()->back()->with('updatedDatabase', 'Session has been created');
     }
 
     public function getSessions(){
 
     	$authUserId = Auth::id();
-    	$users = DB::table('users')
+    	$authUserSessions = DB::table('users')
             ->join('sessions', 'users.id', '=', 'sessions.userId')
             ->join('jobs', 'sessions.jobId', '=', 'jobs.id')
             ->join('expenses', 'expenses.sessionId', '=', 'sessions.id')
 
-            ->select('users.*', 'sessions.*', 'jobs.*', 'expenses.*', 'users.id as user_id','sessions.id as session_id', 'jobs.id as job_id', 'expenses.id as expenses_id', 'sessions.status as session_status', 'expenses.status as expenses_status' )
+            ->select('users.*', 'sessions.*', 'jobs.*', 'expenses.*', 'users.id as user_id','sessions.id as session_id', 'jobs.id as job_id', 'expenses.id as expenses_id', 'sessions.approved as session_approved', 'expenses.approved as expenses_approved' )
             ->where('users.id' , $authUserId)
+            ->where('sessions.approved' , 'Yes')
+            ->where('expenses.approved' , 'Yes')
             ->get();
             // dd($users);
-            return view('session.getMySessions', ['users' => $users]);
-
+            return view('session.getMySessions', ['authUserSessions' => $authUserSessions]);
     }
 
     public function getSession($session_id){
@@ -80,8 +58,10 @@ class SessionController extends Controller
     	$findSession = DB::table('sessions')
             ->join('jobs', 'sessions.jobId', '=', 'jobs.id')
             ->join('expenses', 'expenses.sessionId', '=', 'sessions.id')
-            ->select('sessions.*', 'jobs.*', 'expenses.*', 'sessions.id as session_id', 'jobs.id as job_id', 'expenses.id as expenses_id', 'sessions.status as session_status', 'expenses.status as expenses_status' )
+            ->select('sessions.*', 'jobs.*', 'expenses.*', 'sessions.id as session_id', 'jobs.id as job_id', 'expenses.id as expenses_id', 'sessions.approved as session_approved', 'expenses.approved as expenses_approved' )
             ->where('sessions.id' , $session_id)
+             ->where('sessions.approved' , 'Yes')
+            ->where('expenses.approved' , 'Yes')
             ->first();
             // dd($findSession);
             return view('session.selectedSession', ['findSession'=> $findSession]);

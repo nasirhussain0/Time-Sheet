@@ -24,11 +24,6 @@
   </div>
 
   <div class="form-group">
-    <label for="status">Session status</label>
-    <input type="text" class="form-control" id="status"  name="status" required>
-  </div>
-
-  <div class="form-group">
     <label for="notes">Notes</label>
   
        <textarea rows = "5" cols = "50" id="notes" name="notes"></textarea>
@@ -52,11 +47,6 @@
   <div class="form-group">
     <label for="paymentType">Payment Type</label>
     <input type="text" class="form-control" id="paymentType"  name="paymentType" required>
-  </div>
-
-  <div class="form-group">
-    <label for="expensesStatus">Payment Status</label>
-    <input type="text" class="form-control" id="expensesStatus"  name="expensesStatus" required>
   </div>
 
    <button type="submit" class="btn btn-primary">Submit</button>

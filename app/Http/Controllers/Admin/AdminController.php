@@ -44,20 +44,20 @@ class AdminController extends Controller
         return redirect()->back()->with('updatedDatabase', 'New details updated');
     }
 
-    public function deleteUser($id){
-    	// $user_id = $id;
+    // public function deleteUser($id){
+    // 	// $user_id = $id;
 
-    	$deleteUserFromExpense = Expense::where('userId', $id)->delete();
+    // 	$deleteUserFromExpense = Expense::where('userId', $id)->delete();
 
-    	$deleteUserFromSession = Session::where('userId', $id)->delete();
+    // 	$deleteUserFromSession = Session::where('userId', $id)->delete();
    
-    	$deleteUserFromHoliday = Holiday::where('userId', $id)->delete();
+    // 	$deleteUserFromHoliday = Holiday::where('userId', $id)->delete();
  
-    	User::destroy($id);
+    // 	User::destroy($id);
 
-    	return redirect()->back()->with('updatedDatabase', 'User account has been deleted');
+    // 	return redirect()->back()->with('updatedDatabase', 'User account has been deleted');
 
-    }
+    // }
 
     public function accountFreeze(Request $request, $id){
     	User::where('id', $id)

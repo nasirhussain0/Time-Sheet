@@ -18,7 +18,7 @@ class CreateExpensesTable extends Migration
             $table->decimal('amount');
             $table->string('evidencePic');
             $table->string('paymentType');
-            $table->string('status');
+            $table->string('approved');
             $table->rememberToken();
             $table->timestamps();
         });

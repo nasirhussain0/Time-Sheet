@@ -29,8 +29,7 @@
             <td>{{$user['payRate']}}</td>
             <td>{{$user['active']}}</td>
             <td>{{$user['numOfHolidays']}}</td>
-            <td><a href="{{url('getUser/'.$user->id)}}" class="btn btn-primary">Edit</a></td>
-            <td><a href="  {{url('deleteUser/'.$user->id)}}"  class="btn btn-warning">Remove</a></td>   
+            <td><a href="{{url('getUser/'.$user->id)}}" class="btn btn-primary">Edit</a></td>   
             <td><a href="  {{url('accountFreeze/'.$user->id)}}"  class="btn btn-danger">Block Account</a></td>   
             <td><a href="  {{url('unfreeze/'.$user->id)}}"  class="btn btn-primary">Unblock Account</a></td>               
         </tr>

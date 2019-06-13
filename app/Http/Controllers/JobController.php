@@ -52,10 +52,10 @@ class JobController extends Controller
         return redirect()->back()->with('updatedDatabase', 'New details updated');
     }
 
-    public function deleteJob($id){
-    	$deleteJobFromSession = Session::where('jobId', $id)->delete();
-    	Job::destroy($id);
+    // public function deleteJob($id){
+    // 	$deleteJobFromSession = Session::where('jobId', $id)->delete();
+    // 	Job::destroy($id);
 
-    	return redirect()->back()->with('updatedDatabase', 'Job has been deleted');
-    }
+    // 	return redirect()->back()->with('updatedDatabase', 'Job has been deleted');
+    // }
 }

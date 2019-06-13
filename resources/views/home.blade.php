@@ -25,7 +25,8 @@
                         <li><a href="{{ route('updateUser') }}" class="btn btn-info">update profile</a></li>
                         <li><a href="{{ route('newSession') }}" class="btn btn-info">Create New Session</a></li>
                         <li><a href="{{ route('getSessions') }}" class="btn btn-info">My Sessions</a></li>
-                          
+                        <li><a href="{{ route('newExpense') }}" class="btn btn-info">Create New Expense</a></li>
+                        <li><a href="{{ route('getExpenses') }}" class="btn btn-info">My Expenses</a></li>                          
                     </ul>
                 </div>
             </div>
