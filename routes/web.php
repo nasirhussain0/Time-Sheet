@@ -47,5 +47,13 @@ Route::group(['middleware' => ['restrictToAdmin']], function(){
 
 Route::get('/newSession', 'SessionController@newSession')->name('newSession');
 Route::post('/createNewSession', 'SessionController@createNewSession');
+Route::get('/getSessions', 'SessionController@getSessions')->name('getSessions');
+Route::get('/getSession/{session_id}', 'SessionController@getSession')->name('getSession');
+Route::post('/updateSession/{session_id}', 'SessionController@updateSession');
+
+
+
+
+
 
 

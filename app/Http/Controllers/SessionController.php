@@ -59,4 +59,38 @@ class SessionController extends Controller
         return redirect()->back()->with('updatedDatabase', 'Session has been created');
     }
 
+    public function getSessions(){
+
+    	$authUserId = Auth::id();
+    	$users = DB::table('users')
+            ->join('sessions', 'users.id', '=', 'sessions.userId')
+            ->join('jobs', 'sessions.jobId', '=', 'jobs.id')
+            ->join('expenses', 'expenses.sessionId', '=', 'sessions.id')
+
+            ->select('users.*', 'sessions.*', 'jobs.*', 'expenses.*', 'users.id as user_id','sessions.id as session_id', 'jobs.id as job_id', 'expenses.id as expenses_id', 'sessions.status as session_status', 'expenses.status as expenses_status' )
+            ->where('users.id' , $authUserId)
+            ->get();
+            // dd($users);
+            return view('session.getMySessions', ['users' => $users]);
+
+    }
+
+    public function getSession($session_id){
+    	// dd($session_id);
+    	$findSession = DB::table('sessions')
+            ->join('jobs', 'sessions.jobId', '=', 'jobs.id')
+            ->join('expenses', 'expenses.sessionId', '=', 'sessions.id')
+            ->select('sessions.*', 'jobs.*', 'expenses.*', 'sessions.id as session_id', 'jobs.id as job_id', 'expenses.id as expenses_id', 'sessions.status as session_status', 'expenses.status as expenses_status' )
+            ->where('sessions.id' , $session_id)
+            ->first();
+            // dd($findSession);
+            return view('session.selectedSession', ['findSession'=> $findSession]);
+
+    }
+
+    public function updateSession(Request $request, $session_id){
+    	dd($session_id);
+
+    }
+
 }
