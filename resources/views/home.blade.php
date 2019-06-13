@@ -23,6 +23,7 @@
                                 @else
                                 @endif
                         <li><a href="{{ route('updateUser') }}" class="btn btn-info">update profile</a></li>
+                        <li><a href="{{ route('newSession') }}" class="btn btn-info">Create New Session</a></li>
                           
                     </ul>
                 </div>

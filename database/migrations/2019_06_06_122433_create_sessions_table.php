@@ -19,8 +19,7 @@ class CreateSessionsTable extends Migration
             $table->time('endTime');
             $table->date('date');
             $table->string('status');          
-            $table->longText('notes');          
-            $table->rememberToken();
+            $table->longText('notes');
             $table->timestamps();
         });
     }

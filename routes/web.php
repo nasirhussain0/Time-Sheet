@@ -41,8 +41,11 @@ Route::group(['middleware' => ['restrictToAdmin']], function(){
 	Route::get('getJob/{id}', 'JobController@getJob')->name('getJob');
 	Route::post('updateJob/{id}', 'JobController@updateJob')->name('updateJob');
 	Route::get('deleteJob/{id}', 'JobController@deleteJob')->name('deleteJob');
-
-
 });
+
+
+
+Route::get('/newSession', 'SessionController@newSession')->name('newSession');
+Route::post('/createNewSession', 'SessionController@createNewSession');
 
 
