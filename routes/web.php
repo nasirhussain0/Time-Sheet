@@ -46,6 +46,7 @@ Route::group(['middleware' => ['restrictToAdmin']], function(){
 	Route::get('getUsersTimesheets', 'Admin\AdminController@getUsersTimesheets')->name('getUsersTimesheets');
 
 	Route::get('generatepdf', 'Admin\AdminController@generatePDF')->name('generatePDF');
+	Route::get('generatecsv', 'Admin\AdminController@generatecsv')->name('generatecsv');
 
 
 

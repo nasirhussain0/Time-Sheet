@@ -7,6 +7,7 @@
         <thead>
         <tr>
             <td><a href="{{url('generatepdf')}}" class="btn btn-primary">Download PDF</a></td>
+            <td><a href="{{url('generatecsv')}}" class="btn btn-primary">Download CSV</a></td>
         </tr>
         </thead>
     </table>   

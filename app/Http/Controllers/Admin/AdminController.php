@@ -12,6 +12,8 @@ use App\Holiday;
 use App\Job;
 use DB;
 use PDF;
+use Excel;
+// use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -143,10 +145,55 @@ class AdminController extends Controller
             ->select('users.*', 'sessions.*', 'users.id as user_id', 'sessions.id as sessions_id', 'sessions.approved as session_approved' )
             ->orderBy('users.id', 'desc')
             ->get();
+
     
 
     $pdf = PDF::loadView('admin.timesheet.timesheetPDF', ['getTimeSheets'=>$getTimeSheets]);
       return $pdf->download('Users-Time-Sheet.pdf');
+
+    }
+
+
+   //  public function generatecsv(){
+   //      $getTimeSheets = DB::table('users')
+   //          ->join('sessions', 'sessions.userId', '=', 'users.id')
+   //          ->select('users.*', 'sessions.*', 'users.id as user_id', 'sessions.id as sessions_id', 'sessions.approved as session_approved' )
+   //          ->orderBy('users.id', 'desc')
+   //          ->get();
+   //  // dd($getTimeSheets);
+
+   // return view('admin.timesheet.timesheetcsv',['getTimeSheets'=>$getTimeSheets]);
+
+   //  }
+
+    public function generatecsv(){
+        $getTimeSheets = DB::table('users')
+            ->join('sessions', 'sessions.userId', '=', 'users.id')
+            ->select('users.*', 'sessions.*', 'users.id as user_id', 'sessions.id as sessions_id', 'sessions.approved as session_approved' )
+            ->orderBy('users.id', 'desc')
+            ->get()
+            ->toArray();
+
+            $getTimeSheetsArray[] = array('Fullname', 'Pay rate', 'Start time', 'End time', 'Date','Num of Holidays' );
+            foreach($getTimeSheets as $timeSheets)
+            {
+                $getTimeSheetsArray[] = array(
+                    'Fullname' => $timeSheets->fullname,
+                    'Pay rate' => $timeSheets->payRate,
+                    'Start time' => $timeSheets->startTime,
+                    'End time' => $timeSheets->endTime,
+                    'Date' => $timeSheets->date,
+                    'Num of Holidays' => $timeSheets->numOfHolidays
+                );
+            }
+            \Excel::create('Get Time Sheets', function($excel) use ($getTimeSheetsArray){
+                $excel->setTitle('Get Time Sheets');
+                $excel->sheet('Get Time Sheets', function($sheet) use($getTimeSheetsArray){
+                    $sheet->fromArray($getTimeSheetsArray, null, 'A1', false, false);
+                });
+            })->download('xlsx');
+
+            
 
     }
     
