@@ -11,6 +11,7 @@ use App\Session;
 use App\Holiday;
 use App\Job;
 use DB;
+use PDF;
 
 class AdminController extends Controller
 {
@@ -70,4 +71,83 @@ class AdminController extends Controller
 	        ->update(['active' => 1]);
 	        return redirect()->back()->with('updatedDatabase', 'User account has been un blocked');
     }
+
+
+    public function getAllExpenses(){
+    
+        $allExpenses = DB::table('users')
+            ->join('expenses', 'expenses.userId', '=', 'users.id')
+            ->select('users.*', 'expenses.*', 'users.id as user_id', 'expenses.id as expenses_id', 'expenses.approved as expenses_approved' )
+            ->get();
+            // dd($allExpenses);
+
+            return view('admin.expense.getAllExpenses', ['allExpenses' => $allExpenses]);
+    }
+
+    public function approveExpense($expenses_id){
+        // dd($expenses_id);
+        Expense::where('id', $expenses_id)
+            ->update(['approved' => 'Yes']);
+            return redirect()->back()->with('updatedDatabase', 'Details updated');
+
+    }
+
+    public function declineExpense($expenses_id){
+        // dd($expenses_id);
+        Expense::where('id', $expenses_id)
+            ->update(['approved' => 'No']);
+            return redirect()->back()->with('updatedDatabase', 'Details updated');
+
+    }
+
+    public function getAllSessions(){
+    
+        $allSessions = DB::table('users')
+            ->join('sessions', 'sessions.userId', '=', 'users.id')
+            ->join('jobs', 'sessions.jobId', '=', 'jobs.id')
+            ->select('users.*', 'sessions.*', 'jobs.*', 'users.id as user_id', 'sessions.id as sessions_id', 'sessions.approved as session_approved' )
+            ->get();
+        
+
+            return view('admin.session.getAllSessions', ['allSessions' => $allSessions]);
+    }
+    
+    public function approveSession($session_id){
+        Session::where('id', $session_id)
+            ->update(['approved' => 'Yes']);
+
+            return redirect()->back()->with('updatedDatabase', 'Details updated');
+    }
+
+    public function declineSession($session_id){
+        Session::where('id', $session_id)
+            ->update(['approved' => 'No']);
+
+        return redirect()->back()->with('updatedDatabase', 'Details updated');
+    }
+
+
+    public function getUsersTimesheets(){
+        $getTimeSheets = DB::table('users')
+            ->join('sessions', 'sessions.userId', '=', 'users.id')
+            ->select('users.*', 'sessions.*', 'users.id as user_id', 'sessions.id as sessions_id', 'sessions.approved as session_approved' )
+            ->orderBy('users.id', 'desc')
+            ->get();
+            // dd($getTimeSheets);
+            return view('admin.timesheet.timesheets', ['getTimeSheets' => $getTimeSheets]);
+    } 
+
+    public function generatePDF(){
+        $getTimeSheets = DB::table('users')
+            ->join('sessions', 'sessions.userId', '=', 'users.id')
+            ->select('users.*', 'sessions.*', 'users.id as user_id', 'sessions.id as sessions_id', 'sessions.approved as session_approved' )
+            ->orderBy('users.id', 'desc')
+            ->get();
+    
+
+    $pdf = PDF::loadView('admin.timesheet.timesheetPDF', ['getTimeSheets'=>$getTimeSheets]);
+      return $pdf->download('Users-Time-Sheet.pdf');
+
+    }
+    
 }

@@ -15,11 +15,12 @@ class CreateSessionsTable extends Migration
     {
          Schema::create('sessions', function (Blueprint $table) {
             $table->increments('id');
-            $table->time('startTime');
-            $table->time('endTime');
-            $table->date('date');
-            $table->string('status');          
-            $table->longText('notes');
+            $table->time('startTime')->nullable();
+            $table->time('endTime')->nullable();
+            $table->date('date')->nullable();
+            $table->string('status')->nullable();  
+            $table->longText('notes')->nullable();
+            $table->string('approved')->nullable();
             $table->timestamps();
         });
     }

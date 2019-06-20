@@ -18,9 +18,9 @@ class SessionController extends Controller
 
     public function createNewSession(Request $request){
     	$userId = Auth::id();
-    	
+    	// dd($userId);
     	$jobId = $request->input('job');
-
+        // dd($jobId);
     	$session = New Session();
 		$session->startTime = $request->startTime;
         $session->endTime = $request->endTime;
@@ -37,39 +37,51 @@ class SessionController extends Controller
     }
 
     public function getSessions(){
-
-    	$authUserId = Auth::id();
-    	$authUserSessions = DB::table('users')
+        $authUserId = Auth::id();
+        $authUserSessions = DB::table('users')
             ->join('sessions', 'users.id', '=', 'sessions.userId')
             ->join('jobs', 'sessions.jobId', '=', 'jobs.id')
-            ->join('expenses', 'expenses.sessionId', '=', 'sessions.id')
-
-            ->select('users.*', 'sessions.*', 'jobs.*', 'expenses.*', 'users.id as user_id','sessions.id as session_id', 'jobs.id as job_id', 'expenses.id as expenses_id', 'sessions.approved as session_approved', 'expenses.approved as expenses_approved' )
+            ->select('users.*', 'sessions.*', 'jobs.*',  'users.id as user_id','sessions.id as session_id', 'jobs.id as job_id', 'sessions.approved as session_approved' )
             ->where('users.id' , $authUserId)
-            ->where('sessions.approved' , 'Yes')
-            ->where('expenses.approved' , 'Yes')
             ->get();
-            // dd($users);
+
             return view('session.getMySessions', ['authUserSessions' => $authUserSessions]);
     }
 
     public function getSession($session_id){
-    	// dd($session_id);
-    	$findSession = DB::table('sessions')
+        $findSession = DB::table('sessions')
             ->join('jobs', 'sessions.jobId', '=', 'jobs.id')
-            ->join('expenses', 'expenses.sessionId', '=', 'sessions.id')
-            ->select('sessions.*', 'jobs.*', 'expenses.*', 'sessions.id as session_id', 'jobs.id as job_id', 'expenses.id as expenses_id', 'sessions.approved as session_approved', 'expenses.approved as expenses_approved' )
+            ->select('sessions.*', 'jobs.*', 'sessions.id as session_id', 'jobs.id as job_id', 'sessions.approved as session_approved')
             ->where('sessions.id' , $session_id)
-             ->where('sessions.approved' , 'Yes')
-            ->where('expenses.approved' , 'Yes')
             ->first();
-            // dd($findSession);
+
             return view('session.selectedSession', ['findSession'=> $findSession]);
 
     }
 
     public function updateSession(Request $request, $session_id){
-    	dd($session_id);
+        $userId = Auth::id();
+        $jobId = $request->input('job');
+        $startTime = $request->input('startTime');
+        $endTime = $request->input('endTime');
+        $date = $request->input('date');
+        $approved = $request->sessionStatus;
+        $notes = $request->input('notes');
+  
+        $updateSessionsArray = array('startTime'=>$startTime,
+            'endTime'=>$endTime,
+            'date'=> $date,
+            'approved'=> $approved,
+            'notes'=> $notes,
+            'userId'=> $userId,
+            'jobId'=> $jobId,
+        );
+
+        // dd($updateSessionsArray);
+        DB::table('sessions')->where('id',$session_id)
+        ->update($updateSessionsArray);
+        
+        return redirect()->back()->with('updatedDatabase', 'New details updated');
 
     }
 

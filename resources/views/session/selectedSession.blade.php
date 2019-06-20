@@ -25,7 +25,7 @@
 
   <div class="form-group">
     <label for="status">Session approved</label>
-    <input type="text" class="form-control" id="status"  name="status"  value="{{$findSession->session_approved}}" required>
+    <input type="text" class="form-control" id="sessionStatus"  name="sessionStatus"  value="{{$findSession->session_approved}}" required readonly>
   </div>
 
   <div class="form-group">
@@ -34,34 +34,10 @@
   </div>
 
   <select name="job" id="job" class="form-control">
- 
       <option value="{{ $findSession->job_id }}">{{ $findSession->name }}</option>
 
   </select>
-
-  <div class="form-group">
-    <label for="amount">Cost</label>
-    <input type="text" class="form-control" id="amount"  name="amount" value="{{$findSession->amount}}" required>
-  </div>
-
-  <div class="form-group">
-    <label for="evidencePic">Upload</label>    
-    <input type="file" class="form-control-file" id="evidencePic" name="evidencePic">
-  </div>
-  <div class="form-group">
-    <label for="paymentType">Payment Type</label>
-    <input type="text" class="form-control" id="paymentType"  name="paymentType" value="{{$findSession->paymentType}}" required>
-  </div>
-
-  <div class="form-group">
-    <label for="expensesStatus">Expenses approved</label>
-    <input type="text" class="form-control" id="expensesStatus"  name="expensesStatus" value="{{$findSession->expenses_approved}}" required>
-  </div>
-
    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-
-
-
 
 @endsection

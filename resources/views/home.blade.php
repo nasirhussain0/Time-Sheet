@@ -20,6 +20,11 @@
                                 <li><a href="{{route('getAllUsers')}}" class="btn btn-info"> Users</a></li>
                                 <li><a href="{{route('newJob')}}" class="btn btn-info"> Create New Job</a></li>
                                 <li><a href="{{route('getAllJobs')}}" class="btn btn-info">Jobs</a></li>
+                                <li><a href="{{route('getAllExpenses')}}" class="btn btn-info">Manage Expenses</a></li>
+                                <li><a href="{{route('getAllSessions')}}" class="btn btn-info">Manage Sessions</a></li>
+                                <li><a href="{{route('getUsersTimesheets')}}" class="btn btn-info">Manage Time-Sheet</a></li>
+
+
                                 @else
                                 @endif
                         <li><a href="{{ route('updateUser') }}" class="btn btn-info">update profile</a></li>

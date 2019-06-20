@@ -33,6 +33,22 @@ Route::group(['middleware' => ['restrictToAdmin']], function(){
 
 	Route::get('accountFreeze/{id}', 'Admin\AdminController@accountFreeze')->name('accountFreeze');
 	Route::get('unfreeze/{id}', 'Admin\AdminController@unfreeze')->name('unfreeze');
+
+	Route::get('/getAllExpenses', 'Admin\AdminController@getAllExpenses')->name('getAllExpenses');
+	
+	Route::get('approveExpense/{expenses_id}', 'Admin\AdminController@approveExpense')->name('approveExpense');
+	Route::get('declineExpense/{expenses_id}', 'Admin\AdminController@declineExpense')->name('declineExpense');
+
+	Route::get('/getAllSessions', 'Admin\AdminController@getAllSessions')->name('getAllSessions');
+	Route::get('approveSession/{session_id}', 'Admin\AdminController@approveSession')->name('approveSession');
+	Route::get('declineSession/{session_id}', 'Admin\AdminController@declineSession')->name('declineSession');
+	
+	Route::get('getUsersTimesheets', 'Admin\AdminController@getUsersTimesheets')->name('getUsersTimesheets');
+
+	Route::get('generatepdf', 'Admin\AdminController@generatePDF')->name('generatePDF');
+
+
+
 //job routes
 	Route::get('newJob', 'JobController@newJob')->name('newJob');
 	Route::post('/createNewJob', 'JobController@createNewJob');
@@ -41,6 +57,7 @@ Route::group(['middleware' => ['restrictToAdmin']], function(){
 	Route::get('getJob/{id}', 'JobController@getJob')->name('getJob');
 	Route::post('updateJob/{id}', 'JobController@updateJob')->name('updateJob');
 	// Route::get('deleteJob/{id}', 'JobController@deleteJob')->name('deleteJob');
+
 });
 
 

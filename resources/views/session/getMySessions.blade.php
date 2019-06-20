@@ -11,7 +11,7 @@
             <th>date</th>
             <th>Job name</th>
             <th>Cost</th>
-            <th>Session status</th>
+            <th>Session approved</th>
             <th>expenses_status</th>
             <th colspan="3">Actions</th>
         </tr>
@@ -24,10 +24,14 @@
             <td>{{$userSessions->endTime}}</td>
             <td>{{$userSessions->date}}</td>
             <td>{{$userSessions->name}}</td>
-            <td>{{$userSessions->amount}}</td>
+            <td></td>
             <td>{{$userSessions->session_approved}}</td>
-            <td>{{$userSessions->expenses_approved}}</td>      
-            <td><a href="{{url('getSession/'.$userSessions->session_id)}}" class="btn btn-primary">Edit</a></td>                      
+            <td></td>
+               
+            @if($userSessions->session_approved == 'No')
+                <td><a href="{{url('getSession/'.$userSessions->session_id)}}" class="btn btn-primary">Edit</a></td>  
+            @else
+            @endif                 
         </tr>
         @endforeach
         </tbody>
