@@ -31,7 +31,7 @@ class User extends Authenticatable
 
     public function Sessions()
     {
-        return $this->hasMany('App\Session');
+        return $this->hasMany('App\Session', 'userId');
     }
 
     public function Holidays()

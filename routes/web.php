@@ -47,6 +47,7 @@ Route::group(['middleware' => ['restrictToAdmin']], function(){
 
 	Route::get('generatepdf', 'Admin\AdminController@generatePDF')->name('generatePDF');
 	Route::get('generatecsv', 'Admin\AdminController@generatecsv')->name('generatecsv');
+	Route::get('getreport', 'Admin\AdminController@getreport')->name('getreport');
 
 
 

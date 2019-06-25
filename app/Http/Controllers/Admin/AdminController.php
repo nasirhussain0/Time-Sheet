@@ -192,8 +192,92 @@ class AdminController extends Controller
                     $sheet->fromArray($getTimeSheetsArray, null, 'A1', false, false);
                 });
             })->download('xlsx');
+    }
+   
 
-            
+    public function getreport(){  
+        //number of sessions for today
+        $getTodayNumOfSessions = DB::table('sessions')->select(DB::raw('*'))->whereRaw('Date(date) = CURDATE()')->count();
+        
+      //number of sessions for each user for today
+        $eachUsersSessionForToday = DB::table('users')
+        ->join('sessions', 'sessions.userId', '=', 'users.id')
+                    ->select('users.id', 'users.fullname', DB::raw("count(*) as countNum"))
+                    ->whereRaw('Date(date) = CURDATE()')
+        ->groupBy('users.id')
+        ->groupBy('users.fullname')
+        ->get();
+
+        //get all users which are NOT in sessions for today
+        $allUsersNotInTodaySession = DB::table("users")->select('*')
+                    ->whereNOTIn('id',function($query){
+                       $query->select('userId')->from('sessions')
+                       ->whereRaw('sessions.date = CURDATE()');
+                    })
+                    ->get();
+
+        //number of sessions for each user for today - 1 week
+        $eachUsersSessionForWeek = DB::table('users')
+        ->join('sessions', 'sessions.userId', '=', 'users.id')
+                ->select('users.id', 'users.fullname', DB::raw("count(*) as countNum"))
+                ->whereRaw('Date(date) BETWEEN CURDATE() -7 AND  CURDATE()')
+        ->groupBy('users.id')
+        ->groupBy('users.fullname')
+        ->get();
+
+      
+        //number of sessions for each user for today - 1 MONTH
+        //SELECT * FROM `sessions` WHERE date >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+        $currentMonthSessionsOfUsers = DB::table('users')
+        ->join('sessions', 'sessions.userId', '=', 'users.id')
+                    ->select('users.id', 'users.fullname', DB::raw("count(*) as countNum"))
+                    ->whereRaw('date >=  DATE_SUB(CURDATE(), INTERVAL 1 MONTH)')
+        ->groupBy('users.id')
+        ->groupBy('users.fullname')
+        ->get();
+
+
+        //number of sessions for each user for this - YEAR
+        //SELECT * FROM sessions WHERE sessions.date BETWEEN DATE_FORMAT(CURDATE(), '%Y-01-01') AND CURDATE()
+
+        // SELECT Count(*) FROM sessions WHERE sessions.date BETWEEN DATE_FORMAT(CURDATE(), '%Y-01-01') AND CURDATE()
+      
+        $currentYearSessionsOfUsers = DB::table('users')
+        ->join('sessions', 'sessions.userId', '=', 'users.id')
+                    ->select('users.id', 'users.fullname', DB::raw("count(*) as totalSessionNum"))
+                    ->whereRaw('date BETWEEN DATE_FORMAT(CURDATE(), "%Y-01-01") AND CURDATE()')
+        ->groupBy('users.id')
+        ->groupBy('users.fullname')
+        ->get();
+
+         //number of sessions for each user
+        $eachUserSessions = User::withCount(['sessions'])
+                ->get();
+                 // dd($eachUserSessions);
+           
+
+
+     
+   
+
+
+
+
+
+
+
+           
+        return view('admin.reports/reports', [
+            'getTodayNumOfSessions' =>$getTodayNumOfSessions,
+            'eachUsersSessionForToday' =>$eachUsersSessionForToday,
+            'allUsersNotInTodaySession' =>$allUsersNotInTodaySession,
+            'eachUsersSessionForWeek' =>$eachUsersSessionForWeek,
+            'currentMonthSessionsOfUsers' =>$currentMonthSessionsOfUsers,
+            'currentYearSessionsOfUsers' =>$currentYearSessionsOfUsers,
+            'eachUserSessions' =>$eachUserSessions,
+
+
+        ]);
 
     }
     
