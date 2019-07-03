@@ -41,9 +41,11 @@ class SessionController extends Controller
         $authUserSessions = DB::table('users')
             ->join('sessions', 'users.id', '=', 'sessions.userId')
             ->join('jobs', 'sessions.jobId', '=', 'jobs.id')
-            ->select('users.*', 'sessions.*', 'jobs.*',  'users.id as user_id','sessions.id as session_id', 'jobs.id as job_id', 'sessions.approved as session_approved' )
+            ->join('expenses', 'expenses.userId', '=', 'users.id')
+            ->select('users.*', 'sessions.*', 'jobs.*', 'expenses.*',  'users.id as user_id','sessions.id as session_id', 'jobs.id as job_id', 'sessions.approved as session_approved', 'expenses.id as expenses_id', 'expenses.approved as expenses_approved' )
             ->where('users.id' , $authUserId)
             ->get();
+            // dd($authUserSessions);
 
             return view('session.getMySessions', ['authUserSessions' => $authUserSessions]);
     }

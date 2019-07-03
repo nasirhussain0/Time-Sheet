@@ -255,18 +255,6 @@ class AdminController extends Controller
                 ->get();
                  // dd($eachUserSessions);
            
-
-
-     
-   
-
-
-
-
-
-
-
-           
         return view('admin.reports/reports', [
             'getTodayNumOfSessions' =>$getTodayNumOfSessions,
             'eachUsersSessionForToday' =>$eachUsersSessionForToday,
@@ -280,5 +268,47 @@ class AdminController extends Controller
         ]);
 
     }
+    
+    public function getReportByDates(Request $request){
+
+
+        // dd('test');
+
+
+// Select users.*, users.id as user_id, sessions.*, sessions.id as sessions_id, jobs.*, jobs.id as jobs_id, expenses.*, expenses.id as expenses_id, holidays.*, holidays.id as holidays_id  from users
+// INNER JOIN sessions on sessions.userId = users.id
+// INNER JOIN jobs on sessions.jobId = jobs.id
+// INNER JOIN expenses on expenses.userId = users.id
+// INNER JOIN holidays on holidays.userId = users.id
+
+///
+
+//         Select users.*, users.id as user_id, sessions.*, sessions.id as sessions_id, jobs.*, jobs.id as jobs_id, expenses.*, expenses.id as expenses_id from users
+// INNER JOIN sessions on sessions.userId = users.id
+// INNER JOIN jobs on sessions.jobId = jobs.id
+// INNER JOIN expenses on expenses.userId = users.id
+// where sessions.date >= '2018-10-17' and sessions.date <= '2019-06-25';
+
+
+        // $reportByDates = DB::table('users')
+        //     ->join('sessions', 'sessions.userId', '=', 'users.id')
+        //     ->join('jobs', 'sessions.jobId', '=', 'jobs.id')
+        //     ->join('expenses', 'expenses.userId', '=', 'users.id')
+        //     ->join('holidays', 'holidays.userId', '=', 'users.id')
+        //     ->select('users.*', 'sessions.*', 'jobs.*', 'expenses.*', 'users.id as user_id', 'sessions.id as sessions_id', 'sessions.approved as session_approved', 'expenses.id as expenses_id','holidays.id as holidays_id' )
+        //     ->get();
+        //     dd($reportByDates);
+
+
+          $reportByDates = DB::table('users')
+            ->join('sessions', 'sessions.userId', '=', 'users.id')
+            ->join('jobs', 'sessions.jobId', '=', 'jobs.id')
+            ->join('expenses', 'expenses.userId', '=', 'users.id')
+            ->select('users.*', 'sessions.*', 'jobs.*',  'expenses.*', 'users.id as user_id', 'sessions.id as sessions_id', 'sessions.approved as session_approved', 'expenses.id as expenses_id')
+            ->whereRaw('sessions.date >= "2018-10-17" and sessions.date <= "2019-07-25"')          
+            ->get();
+            dd($reportByDates);
+    }
+
     
 }

@@ -24,10 +24,9 @@
             <td>{{$userSessions->endTime}}</td>
             <td>{{$userSessions->date}}</td>
             <td>{{$userSessions->name}}</td>
-            <td></td>
+            <td>{{$userSessions->amount}}</td>
             <td>{{$userSessions->session_approved}}</td>
-            <td></td>
-               
+            <td>{{$userSessions->expenses_approved}}</td>               
             @if($userSessions->session_approved == 'No')
                 <td><a href="{{url('getSession/'.$userSessions->session_id)}}" class="btn btn-primary">Edit</a></td>  
             @else

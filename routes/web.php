@@ -48,6 +48,7 @@ Route::group(['middleware' => ['restrictToAdmin']], function(){
 	Route::get('generatepdf', 'Admin\AdminController@generatePDF')->name('generatePDF');
 	Route::get('generatecsv', 'Admin\AdminController@generatecsv')->name('generatecsv');
 	Route::get('getreport', 'Admin\AdminController@getreport')->name('getreport');
+	Route::get('getReportByDates', 'Admin\AdminController@getReportByDates')->name('getReportByDates');
 
 
 
@@ -59,6 +60,8 @@ Route::group(['middleware' => ['restrictToAdmin']], function(){
 	Route::get('getJob/{id}', 'JobController@getJob')->name('getJob');
 	Route::post('updateJob/{id}', 'JobController@updateJob')->name('updateJob');
 	// Route::get('deleteJob/{id}', 'JobController@deleteJob')->name('deleteJob');
+
+
 
 });
 
