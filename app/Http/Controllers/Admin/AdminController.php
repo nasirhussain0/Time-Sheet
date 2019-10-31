@@ -17,6 +17,10 @@ use Excel;
 
 class AdminController extends Controller
 {
+    public function __construct() {
+        $this->middleware('restrictToAdmin');
+    }
+
     public function index(){
     	$users = User::orderBy('fullname', 'ASC')->get();
     	return view('admin/allUsers', ['users' =>$users]);

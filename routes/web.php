@@ -41,40 +41,39 @@ Route::get('/getExpensePicture/{expenses_id}', 'ExpenseController@getExpensePict
 Route::post('/updateExpensePicture/{expenses_id}', 'ExpenseController@updateExpensePicture');
 Route::get('deleteExpense/{expenses_id}', 'ExpenseController@deleteExpense')->name('deleteExpense');
 
-// Admin Authentication (Middleware)
-Route::group(['middleware' => ['restrictToAdmin']], function(){
-	// User Management Routes
-	Route::get('getAllUsers','Admin\AdminController@index')->name('getAllUsers');
-	Route::get('getUser/{id}', 'Admin\AdminController@getUser')->name('getUser');
-	Route::post('updateUserProfile/{id}', 'Admin\AdminController@updateUserProfile')->name('updateUserProfile');
-	Route::get('deleteUser/{id}', 'Admin\AdminController@deleteUser')->name('deleteUser');
+/**
+ * Admin Routes
+ */
+Route::get('getAllUsers','Admin\AdminController@index')->name('getAllUsers');
+Route::get('getUser/{id}', 'Admin\AdminController@getUser')->name('getUser');
+Route::post('updateUserProfile/{id}', 'Admin\AdminController@updateUserProfile')->name('updateUserProfile');
+Route::get('deleteUser/{id}', 'Admin\AdminController@deleteUser')->name('deleteUser');
 
-	Route::get('accountFreeze/{id}', 'Admin\AdminController@accountFreeze')->name('accountFreeze');
-	Route::get('unfreeze/{id}', 'Admin\AdminController@unfreeze')->name('unfreeze');
+Route::get('accountFreeze/{id}', 'Admin\AdminController@accountFreeze')->name('accountFreeze');
+Route::get('unfreeze/{id}', 'Admin\AdminController@unfreeze')->name('unfreeze');
 
-	// Expense Management Routes
-	Route::get('/getAllExpenses', 'Admin\AdminController@getAllExpenses')->name('getAllExpenses');
-	Route::get('approveExpense/{expenses_id}', 'Admin\AdminController@approveExpense')->name('approveExpense');
-	Route::get('declineExpense/{expenses_id}', 'Admin\AdminController@declineExpense')->name('declineExpense');
+// Expense Management Routes
+Route::get('/getAllExpenses', 'Admin\AdminController@getAllExpenses')->name('getAllExpenses');
+Route::get('approveExpense/{expenses_id}', 'Admin\AdminController@approveExpense')->name('approveExpense');
+Route::get('declineExpense/{expenses_id}', 'Admin\AdminController@declineExpense')->name('declineExpense');
 
-	// Session Management Routes
-	Route::get('/getAllSessions', 'Admin\AdminController@getAllSessions')->name('getAllSessions');
-	Route::get('approveSession/{session_id}', 'Admin\AdminController@approveSession')->name('approveSession');
-	Route::get('declineSession/{session_id}', 'Admin\AdminController@declineSession')->name('declineSession');
-	Route::get('getUsersTimesheets', 'Admin\AdminController@getUsersTimesheets')->name('getUsersTimesheets');
+// Session Management Routes
+Route::get('/getAllSessions', 'Admin\AdminController@getAllSessions')->name('getAllSessions');
+Route::get('approveSession/{session_id}', 'Admin\AdminController@approveSession')->name('approveSession');
+Route::get('declineSession/{session_id}', 'Admin\AdminController@declineSession')->name('declineSession');
+Route::get('getUsersTimesheets', 'Admin\AdminController@getUsersTimesheets')->name('getUsersTimesheets');
 
-	// Export Routes
-	Route::get('generatepdf', 'Admin\AdminController@generatePDF')->name('generatePDF');
-	Route::get('generatecsv', 'Admin\AdminController@generatecsv')->name('generatecsv');
-	Route::get('getreport', 'Admin\AdminController@getreport')->name('getreport');
-	Route::get('getReportByDates', 'Admin\AdminController@getReportByDates')->name('getReportByDates');
+// Export Routes
+Route::get('generatepdf', 'Admin\AdminController@generatePDF')->name('generatePDF');
+Route::get('generatecsv', 'Admin\AdminController@generatecsv')->name('generatecsv');
+Route::get('getreport', 'Admin\AdminController@getreport')->name('getreport');
+Route::get('getReportByDates', 'Admin\AdminController@getReportByDates')->name('getReportByDates');
 
-    // Job Management Routes
-	Route::get('newJob', 'JobController@newJob')->name('newJob');
-	Route::post('/createNewJob', 'JobController@createNewJob');
+// Job Management Routes
+Route::get('newJob', 'JobController@newJob')->name('newJob');
+Route::post('/createNewJob', 'JobController@createNewJob');
 
-	Route::get('getAllJobs','JobController@index')->name('getAllJobs');
-	Route::get('getJob/{id}', 'JobController@getJob')->name('getJob');
-	Route::post('updateJob/{id}', 'JobController@updateJob')->name('updateJob');
-    Route::get('deleteJob/{id}', 'JobController@deleteJob')->name('deleteJob');
-});
+Route::get('getAllJobs','JobController@index')->name('getAllJobs');
+Route::get('getJob/{id}', 'JobController@getJob')->name('getJob');
+Route::post('updateJob/{id}', 'JobController@updateJob')->name('updateJob');
+Route::get('deleteJob/{id}', 'JobController@deleteJob')->name('deleteJob');
