@@ -11,6 +11,10 @@ use DB;
 
 class SessionController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     public function newSession(){
     	$jobs = Job::orderBy('id', 'DESC')->get();
     	return view('session.newSessionForm', ['jobs' => $jobs]);

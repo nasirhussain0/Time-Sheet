@@ -9,6 +9,10 @@ use DB;
 
 class JobController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
 	public function newJob(){
     	return view('admin.job.newJobForm');
     }
